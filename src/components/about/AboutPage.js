@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-function AboutPage() {
+export default function AboutPage() {
   return (
     <Fragment>
       <h1>About Page!</h1>
