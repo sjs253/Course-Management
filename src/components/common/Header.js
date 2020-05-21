@@ -9,6 +9,10 @@ export default function Header() {
         Home
       </NavLink>
       {" | "}
+      <NavLink activeStyle={activestyle} to="/courses" exact>
+        Courses
+      </NavLink>
+      {" | "}
       <NavLink activeStyle={activestyle} exact to="/about">
         About
       </NavLink>
