@@ -1,41 +1,51 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import * as courseActions from "../redux/actions/CourseActions";
+import { bindActionCreators } from "redux";
 
-export default class CoursesPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      course: {
-        title: "",
-      },
-    };
-  }
+class CoursesPage extends React.Component {
+  state = {
+    course: {
+      title: "",
+    },
+  };
 
   handleChange = (event) => {
     const course = { ...this.state.course, title: event.target.value };
-    console.log(this.state.course);
     this.setState({ course });
-    console.log(course);
   };
 
-  handleSubmit = () => {
-    alert(this.state.course.title);
+  handleSubmit = (event) => {
+    console.log(this.props);
+    event.preventDefault();
+    this.props.dispatch(courseActions.CreateCourse(this.state.course));
   };
 
   render() {
     return (
-      <Fragment>
-        <h1>Courses</h1>
-        <h2>Add Course</h2>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            onChange={this.handleChange}
-            value={this.state.course.title}
-          />
-          <input type="submit" value="save" />
-        </form>
-      </Fragment>
+      <form onSubmit={this.handleSubmit}>
+        <h2>Courses</h2>
+        <h3>Add Course</h3>
+        <input
+          type="text"
+          onChange={this.handleChange}
+          value={this.state.course.title}
+        />
+
+        <input type="submit" value="Save" />
+        {this.props.courses.map((course) => (
+          <div key={course.title}>{course.title}</div>
+        ))}
+      </form>
     );
   }
 }
+
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    courses: state.CourseReducer,
+  };
+}
+
+export default connect(mapStateToProps)(CoursesPage);
